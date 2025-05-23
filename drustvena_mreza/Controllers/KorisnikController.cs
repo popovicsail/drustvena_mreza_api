@@ -74,6 +74,19 @@ namespace drustvena_mreza.Controllers
 
             return Ok(korisnik);
         }
+
+        [HttpDelete("{id}")]
+        public ActionResult Delete(int id)
+        {
+            if (!KorisnikRepository.AllKorisnik.ContainsKey(id))
+            {
+                return NotFound();
+            }
+
+            KorisnikRepository.AllKorisnik.Remove(id);
+            korisnikRepository.SaveKorisnik();
+            return NoContent();
+        }
     }
 
 }

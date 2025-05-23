@@ -1,0 +1,16 @@
+@import '../styles/global';
+
+span {
+    color: $warn-color;
+}
+
+div {
+    margin: 25px;
+}
+
+.actions {
+    width: 150px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add or edit book</title>
+    <link rel="stylesheet" href="../../dist/korisnikForm/korisnikForm.css">
+    <script src="korisnikForm.js" defer></script>
+</head>
+
+<body>
+    <div>
+        <form id="form">
+            <label for="korisnickoIme">Korisnicko Ime:</label>
+            <input id="korisnickoIme" name="korisnickoIme" type="text" />
+            <span id="korisnickoImeError"></span>
+            <br />
+
+
+            <label for="ime">Ime:</label>
+            <input id="ime" name="ime" type="text" />
+            <span id="imeError"></span>
+            <br />
+
+            <label for="prezime">Prezime:</label>
+            <input id="prezime" name="prezime" type="text" />
+            <span id="prezimeError"></span>
+            <br />
+
+            <label for="datumRodjenja">Datum Rodjenja:</label>
+            <input id="datumRodjenja" name="datumRodjenja" type="text" />
+            <span id="datumRodjenjaError"></span>
+            <br />
+            
+        </form>
+        <div class="actions">
+            <button id="submitBtn">Submit</button>
+            <button id="cancelBtn">Cancel</button>
+        </div>
+    </div>
+</body>
+
+</html>
