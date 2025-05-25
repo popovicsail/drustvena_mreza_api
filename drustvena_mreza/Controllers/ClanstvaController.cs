@@ -8,13 +8,8 @@ namespace drustvena_mreza.Controllers
     [ApiController]
     public class ClanstvaController : Controller
     {
-        private GrupaRepository grupaRepository = new GrupaRepository();
-        private KorisnikRepository korisnikRepository = new KorisnikRepository();
-        private ClanstvaRepository clanstvaRepository = new ClanstvaRepository();
-
-
-        [HttpGet]
-        public ActionResult<List<Korisnik>> GetById(int grupaId)
+        [HttpGet("members")]
+        public ActionResult<List<Korisnik>> GetMembersById(int grupaId)
         {
             if (!GrupaRepository.AllGrupa.ContainsKey(grupaId))
             {
@@ -31,6 +26,30 @@ namespace drustvena_mreza.Controllers
                     if (grupa.Id == grupaId)
                     {
                         grupaKorisnik.Add(korisnik);
+                    }
+                }
+            }
+            return Ok(grupaKorisnik);
+        }
+
+        [HttpGet("nonmembers")]
+        public ActionResult<List<Korisnik>> GetNonMembersById(int grupaId)
+        {
+            if (!GrupaRepository.AllGrupa.ContainsKey(grupaId))
+            {
+                return NotFound();
+            }
+
+            List<Korisnik> allKorisnik = KorisnikRepository.AllKorisnik.Values.ToList();
+            List<Korisnik> grupaKorisnik = KorisnikRepository.AllKorisnik.Values.ToList();
+
+            foreach (Korisnik korisnik in allKorisnik)
+            {
+                foreach (Grupa grupa in korisnik.Grupa)
+                {
+                    if (grupa.Id == grupaId)
+                    {
+                        grupaKorisnik.Remove(korisnik);
                     }
                 }
             }
@@ -62,9 +81,8 @@ namespace drustvena_mreza.Controllers
             }
 
             korisnik.Grupa.Add(grupa);
-            clanstvaRepository.SaveClanstva();
+            ClanstvaRepository.SaveClanstva();
             return Ok(korisnik);
-
         }
 
         [HttpDelete("{korisnikId}")]
@@ -98,7 +116,7 @@ namespace drustvena_mreza.Controllers
             }
 
             korisnik.Grupa.Remove(grupa);
-            clanstvaRepository.SaveClanstva();
+            ClanstvaRepository.SaveClanstva();
 
             return NoContent();
         }

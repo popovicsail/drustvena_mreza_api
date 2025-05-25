@@ -10,9 +10,6 @@ namespace drustvena_mreza.Controllers
     [ApiController]
     public class KorisnikController : ControllerBase
     {
-        private GrupaRepository grupaRepository = new GrupaRepository();
-        private KorisnikRepository korisnikRepository = new KorisnikRepository();
-        private ClanstvaRepository clanstvaRepository = new ClanstvaRepository();
 
 
         [HttpGet]
@@ -44,7 +41,7 @@ namespace drustvena_mreza.Controllers
 
             newKorisnik.Id = AllUtilities.ReturnIdNew(KorisnikRepository.AllKorisnik.Keys.ToList());
             KorisnikRepository.AllKorisnik[newKorisnik.Id] = newKorisnik;
-            korisnikRepository.SaveKorisnik();
+            KorisnikRepository.SaveKorisnik();
 
             return Ok(newKorisnik);
         }
@@ -69,11 +66,13 @@ namespace drustvena_mreza.Controllers
             korisnik.Prezime = updateKorisnik.Prezime;
             korisnik.DatumRodjenja = updateKorisnik.DatumRodjenja;
 
-            korisnikRepository.SaveKorisnik();
+            KorisnikRepository.SaveKorisnik();
 
 
             return Ok(korisnik);
         }
+
+
 
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
@@ -84,9 +83,31 @@ namespace drustvena_mreza.Controllers
             }
 
             KorisnikRepository.AllKorisnik.Remove(id);
-            korisnikRepository.SaveKorisnik();
+            KorisnikRepository.SaveKorisnik();
             return NoContent();
         }
-    }
 
+
+        [HttpPost("{id}/removeClanstvo")]
+        public ActionResult<Korisnik> RemoveClanstvo([FromBody] ClanstvoDTO data)
+        {
+            Korisnik korisnik = KorisnikRepository.AllKorisnik[data.KorisnikId];
+            Grupa grupa = GrupaRepository.AllGrupa[data.GrupaId];
+            korisnik.Grupa.Remove(grupa);
+            ClanstvaRepository.SaveClanstva();
+
+            return Ok(korisnik);
+        }
+
+        [HttpPost("{id}/addClanstvo")]
+        public ActionResult<Korisnik> AddClanstvo([FromBody] ClanstvoDTO data)
+        {
+            Korisnik korisnik = KorisnikRepository.AllKorisnik[data.KorisnikId];
+            Grupa grupa = GrupaRepository.AllGrupa[data.GrupaId];
+            korisnik.Grupa.Add(grupa);
+            ClanstvaRepository.SaveClanstva();
+
+            return Ok(korisnik);
+        }
+    }
 }

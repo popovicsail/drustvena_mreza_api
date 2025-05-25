@@ -1,6 +1,9 @@
-$primary-color: #4caf50;
+$primary-color: rgb(76, 175, 80);
 $accent-color: #388e3c;
 $warn-color: #dc3545;
+$navbar-title-color: rgb(76, 175, 80);
+$navbar-background-color: rgb(64, 84, 212);
+$navbar-text-color: rgb(255, 255, 255);
 
 body {
     font-family: Arial, sans-serif;
@@ -9,28 +12,79 @@ body {
     background-color: #f8f9fa;
 }
 
-#table-details {
-    padding: 1rem;
+h1 {
+    margin: 0;
+    padding: 20px;
+    color: $primary-color;
+    text-align: center;
+}
+
+nav.navbar {
+    background-color: $navbar-background-color;
+
+    h1 {
+        font-size: 40px;
+        padding: 20px;
+        color: $navbar-title-color;
+        text-align: center;
+    }
+
+    ul {
+        display: flex;
+        justify-content: end;
+        margin: 0;
+        margin-right: 5%;
+        gap: 100px;
+        list-style-type: none;
+        padding-bottom: 10px;
+        padding-top: 0px;
+        
+        li {
+            a {
+                text-decoration: none;
+                font-size: 20px;
+                color: $navbar-text-color;
+                
+                &:hover {
+                    color:  rgb(241, 222, 222);
+                }
+            }
+        }
+    }
+}
+
+.table-details-div {
 
     table {
         width: 50%;
         border-collapse: collapse;
-        margin-top: 1rem;
 
-        th,
+        tr {
+            height: 50px;
+
+            &:hover {
+                background-color: #f1f1f1;
+            }
+        }
+            
+        th {
+            border: 1px solid #ddd;
+            padding: 0.5rem;
+            text-align: left;
+            background-color: $primary-color;
+            color: white;
+            width: 100px;
+            min-width: fit-content;
+        }
+
         td {
             border: 1px solid #ddd;
             padding: 0.5rem;
             text-align: left;
-        }
 
-        th {
-            background-color: $primary-color;
-            color: white;
-        }
-
-        tr:hover {
-            background-color: #f1f1f1;
+            button.tableButton {
+                width: 100%;
+            }
         }
     }
 }
@@ -48,19 +102,6 @@ button {
     }
 }
 
-form {
-    background: white;
-    padding: 20px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    width: 300px;
-    text-align: center;
-
-    label, p {
-        font-weight: bold;
-    }
-}
 
 div {
     display: flex;
@@ -69,6 +110,46 @@ div {
     align-items: center;
 }
 
+div.formDiv {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: white;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    width: 20%;
+    margin-left: 40%;
+    margin-right: 40%;
+
+    form {       
+        display: flex;
+        flex-direction: column;
+        width: 90%;
+        text-align: center;
+        padding: 10px;
+
+        label {
+            font-weight: bold;
+        }
+
+        p {
+            font-weight: bold;
+        }
+    }
+
+    button {
+        margin: 10px;
+        margin-top: 0;
+        width: 90%;
+    }
+
+    #cancelButton {
+        width: 50%;
+    }
+}
+
+
 .hidden {
     display: none;
 }
+

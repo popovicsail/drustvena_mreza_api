@@ -2,15 +2,11 @@
 
 namespace drustvena_mreza.Repositories
 {
-    public class ClanstvaRepository
+    public static class ClanstvaRepository
     {
         private static string ClanstvaPath { get; set; } = "data/clanstva.csv";
 
-        public ClanstvaRepository()
-        {
-            LoadClanstva();
-        }
-        public void LoadClanstva()
+        public static void LoadClanstva()
         {
             try
             {
@@ -34,7 +30,7 @@ namespace drustvena_mreza.Repositories
             }
         }
 
-        public void SaveClanstva()
+        public static void SaveClanstva()
         {
             try
             {

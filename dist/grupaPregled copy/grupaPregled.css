@@ -40,17 +40,17 @@ nav.navbar ul li a:hover {
   color: rgb(241, 222, 222);
 }
 
-.table-details-div table {
+#table-details table {
   width: 50%;
   border-collapse: collapse;
 }
-.table-details-div table tr {
+#table-details table tr {
   height: 50px;
 }
-.table-details-div table tr:hover {
+#table-details table tr:hover {
   background-color: #f1f1f1;
 }
-.table-details-div table th {
+#table-details table th {
   border: 1px solid #ddd;
   padding: 0.5rem;
   text-align: left;
@@ -59,12 +59,12 @@ nav.navbar ul li a:hover {
   width: 100px;
   min-width: fit-content;
 }
-.table-details-div table td {
+#table-details table td {
   border: 1px solid #ddd;
   padding: 0.5rem;
   text-align: left;
 }
-.table-details-div table td button.tableButton {
+#table-details table td button.tableButton {
   width: 100%;
 }
 
@@ -128,4 +128,4 @@ p {
   text-align: center;
 }
 
-/*# sourceMappingURL=korisnikPregled.css.map */
+/*# sourceMappingURL=grupaPregled.css.map */

@@ -11,15 +11,14 @@ namespace drustvena_mreza.Controllers
     public class GrupaController : ControllerBase
     {
 
-        private GrupaRepository grupaRepository = new GrupaRepository();
-
-
         [HttpGet]
-        public ActionResult<List<GrupaDTO>> GetAll()   //U Grupa.cs sam napravio klasu (GrupaDTO) da mogu konvertovati vrijeme u string i prikazati u dobrom formatu
+        public ActionResult<List<Grupa>> GetAll()   //U Grupa.cs sam napravio klasu (GrupaDTO) da mogu konvertovati vrijeme u string i prikazati u dobrom formatu
         {
-            List<GrupaDTO> grupeList = GrupaRepository.AllGrupa.Values.Select(grupa => new GrupaDTO (grupa)).ToList();
+            List<Grupa> grupeList = GrupaRepository.AllGrupa.Values.ToList();
             return grupeList;
         }
+
+        
 
         [HttpPost]
         public ActionResult<Grupa> Create([FromBody] Grupa newGrupa)
@@ -33,7 +32,7 @@ namespace drustvena_mreza.Controllers
                 return BadRequest();
             }
             GrupaRepository.AllGrupa[newGrupa.Id] = newGrupa;
-            grupaRepository.SaveGrupa();
+            GrupaRepository.SaveGrupa();
             return Ok(newGrupa);
         }
 
@@ -46,7 +45,7 @@ namespace drustvena_mreza.Controllers
             }
 
             GrupaRepository.AllGrupa.Remove(id);
-            grupaRepository.SaveGrupa();
+            GrupaRepository.SaveGrupa();
             return NoContent();
         }
 

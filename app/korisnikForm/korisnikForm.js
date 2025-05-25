@@ -1,11 +1,11 @@
 function initializeForm() {
 
-  let submitBtn = document.querySelector("#submitBtn")
-  submitBtn.addEventListener("click", submit)
+  let submitButton = document.querySelector("#submitButton")
+  submitButton.addEventListener("click", submit)
 
-  let cancelBtn = document.querySelector("#cancelBtn")
-  cancelBtn.addEventListener("click", function () {
-    window.location.href = '../index.html'
+  let cancelButton = document.querySelector("#cancelButton")
+  cancelButton.addEventListener("click", function () {
+    window.location.href = '../korisnikPregled/korisnikPregled.html'
   })
 
   get()
@@ -107,7 +107,7 @@ function submit() {
       return response.json()
     })
     .then(data => {
-      window.location.href = '../index.html'
+      window.location.href = '../korisnikPregled/korisnikPregled.html'
     })
     .catch(error => {
       console.error('Error:', error.message)

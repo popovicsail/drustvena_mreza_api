@@ -1,10 +1,16 @@
 
+using drustvena_mreza.Repositories;
+
 namespace drustvena_mreza
 {
     public class Program
     {
         public static void Main(string[] args)
         {
+            GrupaRepository.LoadGrupa();
+            KorisnikRepository.LoadKorisnik();
+            ClanstvaRepository.LoadClanstva();
+
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddCors(options =>
@@ -40,6 +46,10 @@ namespace drustvena_mreza
             app.MapControllers();
 
             app.Run();
+
+            GrupaRepository.SaveGrupa();
+            KorisnikRepository.SaveKorisnik();
+            ClanstvaRepository.SaveClanstva();
         }
     }
 }

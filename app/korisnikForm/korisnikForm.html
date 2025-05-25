@@ -4,13 +4,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add or edit book</title>
+    <title>Korisnik Form</title>
     <link rel="stylesheet" href="../../dist/korisnikForm/korisnikForm.css">
     <script src="korisnikForm.js" defer></script>
 </head>
 
 <body>
-    <div>
+    <nav class="navbar">
+        <h1 class="title">Drustvena Mreza</h1>
+        <ul class="nav-links">
+            <li><a href="../korisnikPregled/korisnikPregled.html">Korisnik Pregled</a></li>
+            <li><a href="../grupaPregled/grupaPregled.html">Grupa Pregled</a></li>
+        </ul>
+    </nav>
+
+    <h1>Korisnik Form</h1>
+
+    <div class="formDiv">
         <form id="form">
             <label for="korisnickoIme">Korisnicko Ime:</label>
             <input id="korisnickoIme" name="korisnickoIme" type="text" />
@@ -31,13 +41,10 @@
             <label for="datumRodjenja">Datum Rodjenja:</label>
             <input id="datumRodjenja" name="datumRodjenja" type="text" />
             <span id="datumRodjenjaError"></span>
-            <br />
-            
+            <br />      
         </form>
-        <div class="actions">
-            <button id="submitBtn">Submit</button>
-            <button id="cancelBtn">Cancel</button>
-        </div>
+            <button id="submitButton">Submit</button>
+            <button id="cancelButton">Cancel</button>
     </div>
 </body>
 

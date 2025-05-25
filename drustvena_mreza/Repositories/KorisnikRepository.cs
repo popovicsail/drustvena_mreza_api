@@ -4,15 +4,11 @@ namespace drustvena_mreza.Repositories
 {
     public class KorisnikRepository
     {
-        private string KorisnikPath { get; } = "data/korisnik.csv";
+        private static string KorisnikPath { get; } = "data/korisnik.csv";
         public static Dictionary<int, Korisnik> AllKorisnik { get; set; } = new Dictionary<int, Korisnik>();
-        
-        public KorisnikRepository()
-        {
-            LoadKorisnik();
-        }
 
-        private void LoadKorisnik()
+
+        public static void LoadKorisnik()
         {
             try
             {
@@ -26,7 +22,7 @@ namespace drustvena_mreza.Repositories
                     string newKorisnikKorisnickoIme = korisnikLinijaAll[1];
                     string newKorisnikIme = korisnikLinijaAll[2];
                     string newKorisnikPrezime = korisnikLinijaAll[3];
-                    DateTime newKorisnikDatumRodjenja = DateTime.Parse(korisnikLinijaAll[4]);
+                    string newKorisnikDatumRodjenja = korisnikLinijaAll[4];
 
                     Korisnik newKorisnik = new Korisnik(newKorisnikId, newKorisnikKorisnickoIme, newKorisnikIme, newKorisnikPrezime, newKorisnikDatumRodjenja);
 
@@ -48,7 +44,7 @@ namespace drustvena_mreza.Repositories
             }
         }
 
-        public void SaveKorisnik()
+        public static void SaveKorisnik()
         {
             try
             {

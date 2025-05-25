@@ -2,16 +2,12 @@
 
 namespace drustvena_mreza.Repositories
 {
-    public class GrupaRepository
+    public static class GrupaRepository
     {
-        private string GrupaPath { get; } = "data/grupa.csv";
+        private static string GrupaPath { get; set; } = "data/grupa.csv";
         public static Dictionary<int, Grupa> AllGrupa { get; set; } = new Dictionary<int, Grupa>();
 
-        public GrupaRepository()
-        {
-            LoadGrupa();
-        }
-        private void LoadGrupa()
+        public static void LoadGrupa()
         {
             try
             {
@@ -23,7 +19,7 @@ namespace drustvena_mreza.Repositories
 
                     int newGrupaId = int.Parse(grupaLinijaAll[0]);
                     string newGrupaIme = grupaLinijaAll[1];
-                    DateTime newGrupaDatumOsnivanja = DateTime.Parse(grupaLinijaAll[2]);
+                    string newGrupaDatumOsnivanja = grupaLinijaAll[2];
 
                     Grupa newGrupa = new Grupa(newGrupaId, newGrupaIme, newGrupaDatumOsnivanja);
 
@@ -45,7 +41,7 @@ namespace drustvena_mreza.Repositories
             }
         }
 
-        public void SaveGrupa()
+        public static void SaveGrupa()
         {
             try
             {

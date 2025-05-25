@@ -5,30 +5,71 @@ body {
   background-color: #f8f9fa;
 }
 
-#table-details {
-  padding: 1rem;
+h1 {
+  margin: 0;
+  padding: 20px;
+  color: rgb(76, 175, 80);
+  text-align: center;
 }
-#table-details table {
+
+nav.navbar {
+  background-color: rgb(64, 84, 212);
+}
+nav.navbar h1 {
+  font-size: 40px;
+  padding: 20px;
+  color: rgb(76, 175, 80);
+  text-align: center;
+}
+nav.navbar ul {
+  display: flex;
+  justify-content: end;
+  margin: 0;
+  margin-right: 5%;
+  gap: 100px;
+  list-style-type: none;
+  padding-bottom: 10px;
+  padding-top: 0px;
+}
+nav.navbar ul li a {
+  text-decoration: none;
+  font-size: 20px;
+  color: rgb(255, 255, 255);
+}
+nav.navbar ul li a:hover {
+  color: rgb(241, 222, 222);
+}
+
+.table-details-div table {
   width: 50%;
   border-collapse: collapse;
-  margin-top: 1rem;
 }
-#table-details table th,
-#table-details table td {
+.table-details-div table tr {
+  height: 50px;
+}
+.table-details-div table tr:hover {
+  background-color: #f1f1f1;
+}
+.table-details-div table th {
+  border: 1px solid #ddd;
+  padding: 0.5rem;
+  text-align: left;
+  background-color: rgb(76, 175, 80);
+  color: white;
+  width: 100px;
+  min-width: fit-content;
+}
+.table-details-div table td {
   border: 1px solid #ddd;
   padding: 0.5rem;
   text-align: left;
 }
-#table-details table th {
-  background-color: #4caf50;
-  color: white;
-}
-#table-details table tr:hover {
-  background-color: #f1f1f1;
+.table-details-div table td button.tableButton {
+  width: 100%;
 }
 
 button {
-  background-color: #4caf50;
+  background-color: rgb(76, 175, 80);
   color: white;
   border: none;
   padding: 5px 10px;
@@ -39,19 +80,6 @@ button:hover {
   background-color: #388e3c;
 }
 
-form {
-  background: white;
-  padding: 20px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  width: 300px;
-  text-align: center;
-}
-form label, form p {
-  font-weight: bold;
-}
-
 div {
   display: flex;
   flex-direction: column;
@@ -59,12 +87,45 @@ div {
   align-items: center;
 }
 
+div.formDiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: white;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  width: 20%;
+  margin-left: 40%;
+  margin-right: 40%;
+}
+div.formDiv form {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  text-align: center;
+  padding: 10px;
+}
+div.formDiv form label {
+  font-weight: bold;
+}
+div.formDiv form p {
+  font-weight: bold;
+}
+div.formDiv button {
+  margin: 10px;
+  margin-top: 0;
+  width: 90%;
+}
+div.formDiv #cancelButton {
+  width: 50%;
+}
+
 .hidden {
   display: none;
 }
 
 h1 {
-  color: #4caf50;
+  color: rgb(76, 175, 80);
   text-align: center;
 }
 

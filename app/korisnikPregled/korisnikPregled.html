@@ -9,13 +9,19 @@
 </head>
 
 <body>
+    <nav class="navbar">
+        <h1 class="navbar">Drustvena Mreza</h1>
+        <ul class="nav-links">
+            <li><a href="korisnikPregled.html">Korisnik Pregled</a></li>
+            <li><a href="../grupaPregled/grupaPregled.html">Grupa Pregled</a></li>
+        </ul>
+    </nav>
 
-    <h1>Pregled Korisnika</h1>
-    <button id="addBtn">Dodaj Korisnika</button>
-    <p id="no-data-message" class="hidden">No data to display.</p>
-    <div id="table-details">
+    <h1>Korisnik Pregled</h1>
+    
+    <div class="table-details-div">
         <table>
-            <thead class="hidden">
+            <thead>
                 <tr>
                     <th>Korisnicko Ime</th>
                     <th>Ime</th>
@@ -28,9 +34,14 @@
             <tbody>
 
             </tbody>
+            <tfoot>
+                <tr>
+                    <td><button class="tableButton">Dodaj Korisnika</button></td>
+                </tr>
+            </tfoot>
+
         </table>
     </div>
-
 
     <script src="korisnikPregled.js"></script>
 
