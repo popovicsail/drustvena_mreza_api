@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using drustvena_mreza.Models;
 using drustvena_mreza.Utilities;
+using Microsoft.Data.Sqlite;
 
 namespace drustvena_mreza.Controllers
 {
@@ -15,7 +16,7 @@ namespace drustvena_mreza.Controllers
         [HttpGet]
         public ActionResult<List<Korisnik>> GetAll()
         {
-            List<Korisnik> allKorisnik = KorisnikRepository.AllKorisnik.Values.ToList();
+            List<Korisnik> allKorisnik = GetAllKorisnikFromDatabase();
             return allKorisnik;
         }
 
@@ -108,6 +109,55 @@ namespace drustvena_mreza.Controllers
             ClanstvaRepository.SaveClanstva();
 
             return Ok(korisnik);
+        }
+
+        private List<Korisnik> GetAllKorisnikFromDatabase()
+        {
+            try
+            {
+                using SqliteConnection sqliteConnection = new SqliteConnection("Data Source=data/database.db");
+                sqliteConnection.Open();
+
+                string sqliteQuery = "SELECT * FROM Users";
+                using SqliteCommand sqliteCommand = new SqliteCommand(sqliteQuery, sqliteConnection);
+
+                using SqliteDataReader sqliteDataReader = sqliteCommand.ExecuteReader();
+
+                List<Korisnik> AllKorisnik = new List<Korisnik>();
+
+                while (sqliteDataReader.Read())
+                {
+                    int korisnikId = sqliteDataReader.GetInt32(0);
+                    string korisnikKorisnickoIme = sqliteDataReader.GetString(1);
+                    string korisnikIme = sqliteDataReader.GetString(2);
+                    string korisnikPrezime = sqliteDataReader.GetString(3);
+                    string korisnikDatumRodjenja = sqliteDataReader.GetString(4);
+
+                    Korisnik newKorisnik = new Korisnik(korisnikId, korisnikKorisnickoIme, korisnikIme, korisnikPrezime, korisnikDatumRodjenja);
+
+                    AllKorisnik.Add(newKorisnik);
+                }
+
+                return AllKorisnik;
+            }
+            catch (SqliteException ex)
+            {
+                Console.WriteLine($"Greška pri konekciji ili izvršavanju neispravnih SQL upita: {ex.Message}");
+            }
+            catch (FormatException ex)
+            {
+                Console.WriteLine($"Greška u konverziji podataka iz baze: {ex.Message}");
+            }
+            catch (InvalidOperationException ex)
+            {
+                Console.WriteLine($"Konekcija nije otvorena ili je otvorena više puta: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Neočekivana greška: {ex.Message}");
+            }
+
+            return null;
         }
     }
 }

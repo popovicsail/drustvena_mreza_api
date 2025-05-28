@@ -107,8 +107,8 @@ function addToTable(elementName, data) {
 function removeMemberFromGroup(korisnikId, groupId) {
 
   let requestBody = {
-    "KorisnikId": korisnikId,
-    "GrupaId": groupId
+    KorisnikId: korisnikId,
+    GrupaId: groupId
   }
 
   fetch(`http://localhost:46211/api/korisnik/${korisnikId}/removeClanstvo`, {
