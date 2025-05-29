@@ -11,24 +11,23 @@ namespace drustvena_mreza.Controllers
     [ApiController]
     public class KorisnikController : ControllerBase
     {
+        KorisnikDbRepository KorisnikDB { get; set; } = new KorisnikDbRepository();
 
 
         [HttpGet]
         public ActionResult<List<Korisnik>> GetAll()
         {
-            List<Korisnik> allKorisnik = GetAllKorisnikFromDatabase();
+            List<Korisnik> allKorisnik = KorisnikDB.GetAll();
             return allKorisnik;
         }
 
 
-        [HttpGet("{id}")]
-        public ActionResult<Korisnik> GetById(int id)
+        [HttpGet("{inputId}")]
+        public ActionResult<Korisnik> GetById(int inputId)
         {
-            if (!KorisnikRepository.AllKorisnik.ContainsKey(id))
-            {
-                return NotFound();
-            }
-            return Ok(KorisnikRepository.AllKorisnik[id]);
+            Korisnik korisnik = KorisnikDB.GetById(inputId);
+
+            return Ok(korisnik);
         }
 
 
@@ -109,55 +108,6 @@ namespace drustvena_mreza.Controllers
             ClanstvaRepository.SaveClanstva();
 
             return Ok(korisnik);
-        }
-
-        private List<Korisnik> GetAllKorisnikFromDatabase()
-        {
-            try
-            {
-                using SqliteConnection sqliteConnection = new SqliteConnection("Data Source=data/database.db");
-                sqliteConnection.Open();
-
-                string sqliteQuery = "SELECT * FROM Users";
-                using SqliteCommand sqliteCommand = new SqliteCommand(sqliteQuery, sqliteConnection);
-
-                using SqliteDataReader sqliteDataReader = sqliteCommand.ExecuteReader();
-
-                List<Korisnik> AllKorisnik = new List<Korisnik>();
-
-                while (sqliteDataReader.Read())
-                {
-                    int korisnikId = sqliteDataReader.GetInt32(0);
-                    string korisnikKorisnickoIme = sqliteDataReader.GetString(1);
-                    string korisnikIme = sqliteDataReader.GetString(2);
-                    string korisnikPrezime = sqliteDataReader.GetString(3);
-                    string korisnikDatumRodjenja = sqliteDataReader.GetString(4);
-
-                    Korisnik newKorisnik = new Korisnik(korisnikId, korisnikKorisnickoIme, korisnikIme, korisnikPrezime, korisnikDatumRodjenja);
-
-                    AllKorisnik.Add(newKorisnik);
-                }
-
-                return AllKorisnik;
-            }
-            catch (SqliteException ex)
-            {
-                Console.WriteLine($"Greška pri konekciji ili izvršavanju neispravnih SQL upita: {ex.Message}");
-            }
-            catch (FormatException ex)
-            {
-                Console.WriteLine($"Greška u konverziji podataka iz baze: {ex.Message}");
-            }
-            catch (InvalidOperationException ex)
-            {
-                Console.WriteLine($"Konekcija nije otvorena ili je otvorena više puta: {ex.Message}");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Neočekivana greška: {ex.Message}");
-            }
-
-            return null;
         }
     }
 }
