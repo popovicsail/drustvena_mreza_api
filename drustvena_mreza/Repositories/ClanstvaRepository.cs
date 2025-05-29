@@ -40,7 +40,7 @@ namespace drustvena_mreza.Repositories
                 {
                     foreach (Grupa grupa in korisnik.Grupa)
                     {
-                        int korisnikId = korisnik.Id;
+                        int? korisnikId = korisnik.Id;
                         int grupaId = grupa.Id;
                         clanstvaLinije.Add($"{korisnikId},{grupaId}");
                     }

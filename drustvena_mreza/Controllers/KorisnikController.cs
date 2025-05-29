@@ -32,16 +32,14 @@ namespace drustvena_mreza.Controllers
 
 
         [HttpPost]
-        public ActionResult<Korisnik> Create([FromBody] Korisnik newKorisnik)
+        public ActionResult<Korisnik> Create([FromBody] Korisnik inputKorisnik)
         {
-            if (string.IsNullOrWhiteSpace(newKorisnik.KorisnickoIme) || string.IsNullOrWhiteSpace(newKorisnik.Ime) || string.IsNullOrWhiteSpace(newKorisnik.Prezime) || string.IsNullOrWhiteSpace(newKorisnik.DatumRodjenja.ToString()))
+            if (string.IsNullOrWhiteSpace(inputKorisnik.KorisnickoIme) || string.IsNullOrWhiteSpace(inputKorisnik.Ime) || string.IsNullOrWhiteSpace(inputKorisnik.Prezime) || string.IsNullOrWhiteSpace(inputKorisnik.DatumRodjenja.ToString()))
             {
                 return BadRequest();
             }
 
-            newKorisnik.Id = AllUtilities.ReturnIdNew(KorisnikRepository.AllKorisnik.Keys.ToList());
-            KorisnikRepository.AllKorisnik[newKorisnik.Id] = newKorisnik;
-            KorisnikRepository.SaveKorisnik();
+            Korisnik newKorisnik = KorisnikDB.Create(inputKorisnik);
 
             return Ok(newKorisnik);
         }
@@ -55,21 +53,10 @@ namespace drustvena_mreza.Controllers
                 return BadRequest();
             }
 
-            if (!KorisnikRepository.AllKorisnik.ContainsKey(id))
-            {
-                return NotFound();
-            }
-
-            Korisnik korisnik = KorisnikRepository.AllKorisnik[id];
-            korisnik.KorisnickoIme = updateKorisnik.KorisnickoIme;
-            korisnik.Ime = updateKorisnik.Ime;
-            korisnik.Prezime = updateKorisnik.Prezime;
-            korisnik.DatumRodjenja = updateKorisnik.DatumRodjenja;
-
-            KorisnikRepository.SaveKorisnik();
+            Korisnik updatedKorisnik = KorisnikDB.Update(id, updateKorisnik);
 
 
-            return Ok(korisnik);
+            return Ok(updatedKorisnik);
         }
 
 
@@ -77,13 +64,8 @@ namespace drustvena_mreza.Controllers
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
-            if (!KorisnikRepository.AllKorisnik.ContainsKey(id))
-            {
-                return NotFound();
-            }
+            KorisnikDB.Delete(id);
 
-            KorisnikRepository.AllKorisnik.Remove(id);
-            KorisnikRepository.SaveKorisnik();
             return NoContent();
         }
 

@@ -2,14 +2,14 @@
 {
     public class Korisnik
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public string KorisnickoIme { get; set; }
         public string Ime { get; set; }
         public string Prezime { get; set; }
         public string DatumRodjenja { get; set; }
         public List<Grupa> Grupa { get; set; } = new List<Grupa>();
 
-        public Korisnik(int id, string korisnickoIme, string ime, string prezime, string datumRodjenja)
+        public Korisnik(int? id, string korisnickoIme, string ime, string prezime, string datumRodjenja)
         {
             Id = id;
             KorisnickoIme = korisnickoIme;
