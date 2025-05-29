@@ -11,21 +11,44 @@ namespace drustvena_mreza.Controllers
     [ApiController]
     public class KorisnikController : ControllerBase
     {
-        KorisnikDbRepository KorisnikDB { get; set; } = new KorisnikDbRepository();
+        private readonly KorisnikDbRepository korisnikDB;
+
+        public KorisnikController(KorisnikDbRepository korisnikDbRepository)
+        {
+            korisnikDB = korisnikDbRepository;
+        }
 
 
         [HttpGet]
-        public ActionResult<List<Korisnik>> GetAll()
+        public ActionResult GetPaged ([FromQuery] int page, [FromQuery] int pageSize)
         {
-            List<Korisnik> allKorisnik = KorisnikDB.GetAll();
-            return allKorisnik;
+            if (page < 1 || pageSize < 1)
+            {
+                return BadRequest("Page and PageSize must be higher than 0");
+            }
+            try
+            {
+                List<Korisnik> allKorisnik = korisnikDB.GetPaged(page, pageSize);
+
+                int totalCount = korisnikDB.CountAll();
+                Object result = new
+                {
+                    Data = allKorisnik,
+                    TotalCount = totalCount
+                };
+                return Ok(result);
+            }
+            catch
+            {
+                return Problem("ERROR: An error occured.");
+            }
         }
 
 
         [HttpGet("{inputId}")]
         public ActionResult<Korisnik> GetById(int inputId)
         {
-            Korisnik korisnik = KorisnikDB.GetById(inputId);
+            Korisnik korisnik = korisnikDB.GetById(inputId);
 
             return Ok(korisnik);
         }
@@ -39,7 +62,7 @@ namespace drustvena_mreza.Controllers
                 return BadRequest();
             }
 
-            Korisnik newKorisnik = KorisnikDB.Create(inputKorisnik);
+            Korisnik newKorisnik = korisnikDB.Create(inputKorisnik);
 
             return Ok(newKorisnik);
         }
@@ -53,7 +76,7 @@ namespace drustvena_mreza.Controllers
                 return BadRequest();
             }
 
-            Korisnik updatedKorisnik = KorisnikDB.Update(id, updateKorisnik);
+            Korisnik updatedKorisnik = korisnikDB.Update(id, updateKorisnik);
 
 
             return Ok(updatedKorisnik);
@@ -64,7 +87,7 @@ namespace drustvena_mreza.Controllers
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
-            KorisnikDB.Delete(id);
+            korisnikDB.Delete(id);
 
             return NoContent();
         }

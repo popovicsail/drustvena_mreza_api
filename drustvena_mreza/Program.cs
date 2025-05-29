@@ -7,9 +7,7 @@ namespace drustvena_mreza
     {
         public static void Main(string[] args)
         {
-            GrupaRepository.LoadGrupa();
-            KorisnikRepository.LoadKorisnik();
-            ClanstvaRepository.LoadClanstva();
+
 
             var builder = WebApplication.CreateBuilder(args);
 
@@ -24,10 +22,13 @@ namespace drustvena_mreza
                     });
             });
 
+            builder.Services.AddScoped<GrupaDBRepository>();
+            builder.Services.AddScoped<KorisnikDbRepository>();
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+           
 
             var app = builder.Build();
 
@@ -47,9 +48,6 @@ namespace drustvena_mreza
 
             app.Run();
 
-            GrupaRepository.SaveGrupa();
-            KorisnikRepository.SaveKorisnik();
-            ClanstvaRepository.SaveClanstva();
         }
     }
 }

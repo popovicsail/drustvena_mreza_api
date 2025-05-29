@@ -11,20 +11,45 @@ namespace drustvena_mreza.Controllers
     [ApiController]
     public class GrupaController : ControllerBase
     {
-        GrupaDBRepository GrupaDB { get; set; } = new GrupaDBRepository();
+        private readonly GrupaDBRepository grupaDB;
+
+        public GrupaController(GrupaDBRepository grupaDBRepository)
+        {
+            grupaDB = grupaDBRepository;
+        }
 
         [HttpGet]
-        public ActionResult<List<Grupa>> GetAll()
+        public ActionResult GetPaged([FromQuery] int page, [FromQuery] int pageSize)
         {
-            List<Grupa> grupeList = GrupaDB.GetAll();
-            return grupeList;
+            if (page < 1 || pageSize < 1)
+            {
+                return BadRequest("Page and PageSize must be higher than 0");
+            }
+            try
+            {
+                List<Grupa> allGrupa = grupaDB.GetPaged(page, pageSize);
+
+                int totalCount = grupaDB.CountAll();
+
+                Object result = new
+                {
+                    Data = allGrupa,
+                    TotalCount = totalCount
+                };
+                return Ok(result);
+            }
+            catch
+            {
+                return Problem("ERROR: An error occured.");
+                
+            }      
         }
 
 
         [HttpGet("{inputId}")]
         public ActionResult<Korisnik> GetById(int inputId)
         {
-            Grupa grupa = GrupaDB.GetById(inputId);
+            Grupa grupa = grupaDB.GetById(inputId);
 
             return Ok(grupa);
         }
@@ -38,7 +63,7 @@ namespace drustvena_mreza.Controllers
                 return BadRequest();
             }
 
-            Grupa grupa = GrupaDB.Create(newGrupa);
+            Grupa grupa = grupaDB.Create(newGrupa);
 
             return Ok(newGrupa);
         }
@@ -47,7 +72,7 @@ namespace drustvena_mreza.Controllers
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
-            GrupaDB.Delete(id);
+            grupaDB.Delete(id);
 
             return NoContent();
         }
