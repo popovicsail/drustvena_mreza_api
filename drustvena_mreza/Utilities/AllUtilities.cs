@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using Microsoft.Data.Sqlite;
 
 namespace drustvena_mreza.Utilities
 {
@@ -303,6 +304,28 @@ namespace drustvena_mreza.Utilities
                     Console.WriteLine("ERROR: Vrednost mora biti vreme u budućnosti i u formatu dd.MM.yyyy.");
                 }
             }
+        }
+
+
+        public static void HandleException(Exception exception)
+        {
+            switch (exception)
+            {
+                case SqliteException:
+                    Console.WriteLine($"Greška pri konekciji ili izvršavanju neispravnih SQL upita: {exception.Message}");
+                    break;
+                case FormatException:
+                    Console.WriteLine($"Greška u konverziji podataka iz baze: {exception.Message}");
+                    break;
+                case InvalidOperationException:
+                    Console.WriteLine($"Konekcija nije otvorena ili je otvorena više puta: {exception.Message}");
+                    break;
+                default:
+                    Console.WriteLine($"Neočekivana greška: {exception.Message}");
+                    break;
+            }
+
+            throw exception;
         }
     }
 }

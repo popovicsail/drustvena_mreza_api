@@ -7,8 +7,6 @@ namespace drustvena_mreza
     {
         public static void Main(string[] args)
         {
-
-
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddCors(options =>
@@ -22,8 +20,6 @@ namespace drustvena_mreza
                     });
             });
 
-            builder.Services.AddScoped<GrupaDBRepository>();
-            builder.Services.AddScoped<KorisnikDbRepository>();
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
